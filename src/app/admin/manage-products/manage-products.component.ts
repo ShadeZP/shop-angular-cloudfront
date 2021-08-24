@@ -14,7 +14,7 @@ export class ManageProductsComponent implements OnInit {
 
   selectedFile: File | null = null;
 
-  products$!: Observable<Product[]>;
+  products$!: Observable<{ products: Product[] }>;
 
   constructor(
     private readonly productsService: ProductsService,

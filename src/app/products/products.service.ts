@@ -8,16 +8,16 @@ import { ApiService } from '../core/api.service';
   providedIn: 'root',
 })
 export class ProductsService extends ApiService {
-  getProducts(): Observable<Product[]> {
-    if (!this.endpointEnabled('bff')) {
-      console.warn(
-        'Endpoint "bff" is disabled. To enable change your environment.ts config'
-      );
-      return this.http.get<Product[]>('/assets/products.json');
-    }
+  getProducts(): Observable<{ products: Product[] }> {
+    // if (!this.endpointEnabled('bff')) {
+    //   console.warn(
+    //     'Endpoint "bff" is disabled. To enable change your environment.ts config'
+    //   );
+    //   return this.http.get<{products: Product[]}>('/assets/products.json');
+    // }
 
-    const url = this.getUrl('bff', 'products');
-    return this.http.get<Product[]>(url);
+    const url = this.getUrl('product', 'products');
+    return this.http.get<{ products: Product[] }>(url);
   }
 
   getProductsForCheckout(ids: string[]): Observable<Product[]> {
@@ -26,7 +26,9 @@ export class ProductsService extends ApiService {
     }
 
     return this.getProducts().pipe(
-      map((products) => products.filter((product) => ids.includes(product.id)))
+      map(({ products }) =>
+        products.filter((product) => ids.includes(product.id))
+      )
     );
   }
 }

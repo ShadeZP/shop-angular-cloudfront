@@ -1,11 +1,8 @@
 <h1>Manage products</h1>
 
-<app-file-picker
-  [(file)]="selectedFile"
-  (uploadClick)="onUploadCSV()"
-></app-file-picker>
+<app-file-picker [(file)]="selectedFile" (uploadClick)="onUploadCSV()"></app-file-picker>
 
-<table class="w-100" [dataSource]="products$" mat-table>
+<table class="w-100" [dataSource]="(products$|async)?.products!" mat-table>
   <ng-container matColumnDef="from">
     <th mat-header-cell *matHeaderCellDef>Title</th>
     <td mat-cell *matCellDef="let product">
